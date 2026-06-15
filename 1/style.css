@@ -361,12 +361,14 @@ p { margin: 0 0 15px; }
 
 .prints {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 18px;
   margin: 18px 0 10px;
 }
 .print {
-  margin: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 440px;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -374,14 +376,6 @@ p { margin: 0 0 15px; }
   box-shadow: var(--shadow-sm);
 }
 .print img { width: 100%; border-radius: 8px; }
-.print figcaption {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 6px;
-  font-weight: 600;
-  letter-spacing: .3px;
-}
 .proof-disclaimer {
   font-size: 12.5px;
   color: var(--muted);
@@ -679,9 +673,6 @@ p { margin: 0 0 15px; }
   .hero { padding: 38px 0 46px; }
   .mistake { padding: 22px 22px; }
   .mistake__num { font-size: 38px; }
-  .prints { grid-template-columns: repeat(3, 1fr); }
-  .prints .print:nth-child(4),
-  .prints .print:nth-child(5) { grid-column: span 1; }
   .price__value { font-size: 76px; }
   .offer-card { padding: 34px 30px; }
   .cta-btn { padding: 18px 24px; }

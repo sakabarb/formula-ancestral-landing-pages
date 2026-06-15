@@ -90,7 +90,7 @@ img { max-width: 100%; height: auto; display: block; }
   box-shadow: 0 -8px 24px rgba(0,0,0,.25);
   transform: translateY(120%);
   transition: transform .35s ease;
-  padding: 9px 0;
+  padding: 9px 0 calc(9px + env(safe-area-inset-bottom, 0px));
 }
 .sticky-cta.is-visible { transform: translateY(0); }
 .sticky-cta__inner {
@@ -223,6 +223,16 @@ p { margin: 0 0 15px; }
   padding: 0 3px;
   color: inherit;
   font-weight: 700;
+}
+/* Em fundo escuro, o "marca-texto" vira preenchimento sólido com texto
+   escuro, senão o texto claro sobre amarelo fica ilegível. */
+.section--dark .hl-yellow {
+  background: var(--yellow);
+  color: #1d231b;
+  padding: 1px 6px;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .muted { color: var(--muted); font-weight: 400; }
 

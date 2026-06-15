@@ -8,6 +8,23 @@
   var finalCta = document.querySelector('.section--final');
   if (!sticky || !hero) return;
 
+  // Cola a barra no fundo do viewport VISÍVEL. No iOS Safari, o viewport de
+  // layout usado por position:fixed difere do visível quando a barra de
+  // ferramentas inferior recolhe/aparece — isso deixava um vão abaixo da barra.
+  var vv = window.visualViewport;
+  if (vv) {
+    var pinBottom = function () {
+      var off = Math.round(window.innerHeight - vv.height - vv.offsetTop);
+      if (off > 160) off = 160; else if (off < -160) off = -160;
+      if (off > -2 && off < 2) off = 0;
+      sticky.style.bottom = off + 'px';
+    };
+    vv.addEventListener('resize', pinBottom);
+    vv.addEventListener('scroll', pinBottom);
+    window.addEventListener('scroll', pinBottom, { passive: true });
+    pinBottom();
+  }
+
   var pastHero = false;   // já passou da dobra inicial?
   var atFinal = false;    // está na oferta final? (evita cobrir o botão)
 

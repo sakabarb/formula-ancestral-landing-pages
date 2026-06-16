@@ -2,3 +2,15 @@
 .vercel
 node_modules
 *.log
+
+# Material de produção do VSL — não vai pro repositório/deploy.
+# O vídeo final fica hospedado no Panda Video, não é servido daqui.
+*.mp4
+*.mov
+*.mp3
+*.MP3
+*.wav
+*.m4a
+4/Material de Vídeo/
+4/Narração/
+4/Vídeo VSL/

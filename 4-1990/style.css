@@ -1,0 +1,232 @@
+/* =========================================================
+   A Fórmula Ancestral do Solo — LP 4 (VSL minimalista)
+   Foco no vídeo. Página limpa, fundo neutro, sem poluição.
+   Abaixo do vídeo: comentários no estilo do plugin do Facebook.
+   ========================================================= */
+
+:root {
+  --bg: #ffffff;
+  --ink: #1c1e21;          /* texto principal (Facebook) */
+  --muted: #65676b;        /* meta/cinza do Facebook */
+  --link: #385898;         /* azul de nome/links do Facebook */
+  --line: #e4e6eb;         /* hairline do Facebook */
+
+  --green: #1f9d4d;
+  --green-cta: #16a34a;
+  --green-cta-d: #11823a;
+
+  --maxw-video: 420px;     /* largura confortável p/ vídeo vertical no desktop */
+  --maxw-comments: 680px;
+
+  --video-ratio-pad: 176.470%; /* 720/408 (vídeo 408x720) */
+
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.4;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ---------- Player (topo, centralizado) ---------- */
+.player {
+  padding: 20px 26px 8px;
+}
+.player__box {
+  width: 100%;
+  max-width: var(--maxw-video);
+  margin: 0 auto;
+}
+.player__ratio {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: var(--video-ratio-pad); /* mantém a proporção do vídeo */
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
+}
+.player__ratio iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ---------- CTA revelado em 90% ---------- */
+.reveal {
+  width: 100%;
+  max-width: var(--maxw-video);
+  margin: 16px auto 4px;
+  text-align: center;
+}
+.reveal[hidden] { display: none; }
+.reveal.is-visible {
+  display: block;
+  animation: reveal-in .5s ease both;
+}
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  background: var(--green-cta);
+  color: #fff;
+  border-radius: 12px;
+  padding: 15px 18px;
+  box-shadow: 0 6px 0 var(--green-cta-d), 0 10px 24px rgba(22, 163, 74, .28);
+  transition: transform .08s ease, box-shadow .08s ease;
+  animation: cta-pulse 2.2s infinite;
+}
+.reveal__btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--green-cta-d); }
+.reveal__main {
+  font-weight: 800;
+  font-size: clamp(17px, 4.6vw, 21px);
+  letter-spacing: .3px;
+  line-height: 1.15;
+}
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 6px 0 var(--green-cta-d), 0 0 0 0 rgba(22,163,74,.4); }
+  50%      { box-shadow: 0 6px 0 var(--green-cta-d), 0 0 0 12px rgba(22,163,74,0); }
+}
+
+/* ---------- Comentários estilo Facebook ---------- */
+.fbc {
+  padding: 14px 14px 26px;
+}
+.fbc__inner {
+  width: 100%;
+  max-width: var(--maxw-comments);
+  margin: 0 auto;
+}
+.fbc__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 2px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.fbc__count { font-size: 15px; font-weight: 700; color: var(--ink); }
+.fbc__sort { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.fbc__sort i { font-style: normal; font-size: 11px; }
+
+.fbc__list { list-style: none; margin: 0; padding: 0; }
+
+/* um comentário */
+.cmt { display: flex; gap: 8px; padding: 14px 2px 4px; }
+.cmt__av {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e4e6eb;
+}
+.cmt__body { min-width: 0; flex: 1 1 auto; }
+.cmt__main { line-height: 1.45; }
+.cmt__name {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+  margin-right: 6px;
+}
+.cmt__name:hover { text-decoration: underline; }
+.cmt__text { color: var(--ink); overflow-wrap: anywhere; }
+
+.cmt__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.cmt__meta a { color: var(--muted); text-decoration: none; font-weight: 600; }
+.cmt__meta a:hover { text-decoration: underline; }
+.cmt__meta span { color: #b0b3b8; }
+.cmt__meta time { color: var(--muted); }
+
+/* respostas (aninhadas) */
+.cmt__replies {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0 0 0 8px;
+  border-left: 2px solid var(--line);
+}
+.cmt--reply { padding: 12px 2px 2px; }
+.cmt--reply .cmt__av { width: 32px; height: 32px; }
+
+/* rodapé do plugin */
+.fbc__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+.fbc__fb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 3px;
+  background: #1877f2;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ---------- Rodapé institucional ---------- */
+.foot {
+  background: #fafafa;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  padding: 24px 16px 34px;
+  color: var(--muted);
+}
+.foot__brand { font-weight: 700; color: #4b5563; margin: 0 0 10px; font-size: 14px; }
+.foot__links { font-size: 13px; margin: 0 0 12px; line-height: 1.9; }
+.foot__links a { color: #6b7280; text-decoration: none; }
+.foot__links a:hover { text-decoration: underline; }
+.foot__links span { margin: 0 6px; color: #c3c7cd; }
+.foot__disc { font-size: 11.5px; line-height: 1.6; color: #9098a1; max-width: 600px; margin: 0 auto 12px; }
+.foot__copy { font-size: 12px; color: #9098a1; margin: 0; }
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+@media (min-width: 760px) {
+  body { font-size: 16px; }
+  .player { padding: 34px 16px 8px; }
+  .cmt__text, .cmt__name { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal__btn { animation: none; }
+  .reveal.is-visible { animation: none; }
+}

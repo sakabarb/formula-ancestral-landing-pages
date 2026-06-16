@@ -1,0 +1,15 @@
+.vercel
+node_modules
+.DS_Store
+*.log
+
+# Material de produção do VSL — não sobe pro deploy (o vídeo fica no Panda Video).
+*.mp4
+*.mov
+*.mp3
+*.MP3
+*.wav
+*.m4a
+4/Material de Vídeo/
+4/Narração/
+4/Vídeo VSL/

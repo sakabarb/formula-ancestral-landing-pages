@@ -89,3 +89,53 @@ var FALLBACK_MS = VIDEO_DURATION_SECONDS * REVEAL_AT * 1000;
     } catch (_) { /* silencioso */ }
   }, false);
 })();
+
+
+/* =========================================================
+   Tracking — repasse de UTMs/parametros de campanha ao checkout
+   Captura os parametros de origem da URL (Facebook/Meta, Google Ads,
+   Google Analytics e TikTok Ads) e os anexa ao link da Hotmart no clique.
+   Tambem dispara InitiateCheckout no Pixel do Facebook ao clicar.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  // Parametros de atribuicao repassados ao checkout.
+  var TRACK_KEYS = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id',
+    'fbclid',                    // Facebook / Meta Ads
+    'gclid', 'gbraid', 'wbraid', // Google Ads
+    'ttclid',                    // TikTok Ads
+    'src', 'sck'                 // codigos de rastreio nativos da Hotmart
+  ];
+
+  var incoming = new URLSearchParams(window.location.search);
+  var carried = new URLSearchParams();
+  TRACK_KEYS.forEach(function (k) {
+    var v = incoming.get(k);
+    if (v) carried.set(k, v);
+  });
+
+  function withTracking(url) {
+    if (!carried.toString()) return url;
+    try {
+      var u = new URL(url, window.location.href);
+      carried.forEach(function (v, k) {
+        if (!u.searchParams.has(k)) u.searchParams.set(k, v);
+      });
+      return u.toString();
+    } catch (_) {
+      return url;
+    }
+  }
+
+  var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
+  Array.prototype.forEach.call(links, function (a) {
+    a.href = withTracking(a.href);
+    a.addEventListener('click', function () {
+      try {
+        if (typeof window.fbq === 'function') window.fbq('track', 'InitiateCheckout');
+      } catch (_) {}
+    });
+  });
+})();

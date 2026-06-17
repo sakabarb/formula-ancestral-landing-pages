@@ -95,7 +95,7 @@ var FALLBACK_MS = VIDEO_DURATION_SECONDS * REVEAL_AT * 1000;
    Tracking — repasse de UTMs/parametros de campanha ao checkout
    Captura os parametros de origem da URL (Facebook/Meta, Google Ads,
    Google Analytics e TikTok Ads) e os anexa ao link da Hotmart no clique.
-   Tambem dispara InitiateCheckout no Pixel do Facebook ao clicar.
+   (InitiateCheckout/Purchase sao marcados pelo Pixel instalado na Hotmart.)
    ========================================================= */
 (function () {
   'use strict';
@@ -132,10 +132,5 @@ var FALLBACK_MS = VIDEO_DURATION_SECONDS * REVEAL_AT * 1000;
   var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
   Array.prototype.forEach.call(links, function (a) {
     a.href = withTracking(a.href);
-    a.addEventListener('click', function () {
-      try {
-        if (typeof window.fbq === 'function') window.fbq('track', 'InitiateCheckout');
-      } catch (_) {}
-    });
   });
 })();

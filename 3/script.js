@@ -98,19 +98,5 @@
   var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
   Array.prototype.forEach.call(links, function (a) {
     a.href = withTracking(a.href);
-    a.addEventListener('click', function () {
-      // Sinaliza inicio de checkout para o GTM (que dispara GA4 + Google Ads).
-      // Atualize 'value' se mudar o preco do produto.
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ ecommerce: null });
-      window.dataLayer.push({
-        event: 'begin_checkout',
-        ecommerce: {
-          currency: 'BRL',
-          value: 27.90,
-          items: [{ item_name: 'A Formula Ancestral do Solo', price: 27.90, quantity: 1 }]
-        }
-      });
-    });
   });
 })();
